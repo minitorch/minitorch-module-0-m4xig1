@@ -77,7 +77,11 @@ def inv(x):
 
 
 def sigmoid(x):
-    return inv((add(1.0, exp(neg(x))))) if lt(0.0, x) else mul(exp(x), inv(add(1.0, exp(x))))
+    return (
+        inv((add(1.0, exp(neg(x)))))
+        if lt(0.0, x)
+        else mul(exp(x), inv(add(1.0, exp(x))))
+    )
 
 
 def relu(x):
@@ -123,4 +127,42 @@ def relu_back(x1, x2):
 # - prod: take the product of lists
 
 
-# TODO: Implement for Task 0.3.
+def map(func: Callable, x: Iterable):
+    result = []
+    for i in x:
+        result.append(func(i))
+    return result
+
+
+def zipWith(func: Callable, x: Iterable, y: Iterable):
+    result = []
+    for i, j in zip(x, y):
+        result.append(func(i, j))
+    return result
+
+
+def reduce(func: Callable, x: Iterable):
+    it = iter(x)
+    try:
+        result = next(it)
+    except:
+        return None
+    for i in it:
+        result = func(result, i)
+    return result
+
+
+def negList(x: list):
+    return map(neg, x)
+
+
+def addLists(x: list, y: list):
+    return zipWith(add, x, y)
+
+
+def sum(x: list):
+    return reduce(add, x) if len(x) > 0 else 0
+
+
+def prod(x: list):
+    return reduce(mul, x)
