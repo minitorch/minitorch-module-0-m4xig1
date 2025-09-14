@@ -32,7 +32,79 @@ from typing import Callable, Iterable
 # $f(x) = |x - y| < 1e-2$
 
 
-# TODO: Implement for Task 0.1.
+def mul(x1, x2):
+    return x1 * x2
+
+
+def id(x):
+    return x
+
+
+def add(x1, x2):
+    return x1 + x2
+
+
+def neg(x):
+    return -x
+
+
+def lt(x1, x2):
+    return x1 < x2
+
+
+def eq(x1, x2):
+    return x1 == x2
+
+
+def max(x1, x2):
+    return x2 if lt(x1, x2) else x1
+
+
+def is_close(x1, x2, eps=1e-2):
+    return abs(x1 - x2) < eps
+
+
+def exp(x):
+    return math.exp(x)
+
+
+def log(x):
+    return math.log(x)
+
+
+def inv(x):
+    return 1.0 / x
+
+
+def sigmoid(x):
+    return inv((add(1.0, exp(neg(x))))) if lt(0.0, x) else mul(exp(x), inv(add(1.0, exp(x))))
+
+
+def relu(x):
+    return max(0.0, x)
+
+
+def log_back(x1, x2):
+    """
+    x2 * d [log(x1)] / dx1
+    """
+    return mul(inv(x1), x2)
+
+
+def inv_back(x1, x2):
+    """
+    x2 * d [1/x1] / dx1
+    """
+    return mul(neg(inv(mul(x1, x1))), x2)
+
+
+def relu_back(x1, x2):
+    """
+    x2 * d ReLU(x1) dx
+    """
+    if lt(x1, 0.0):
+        return 0.0
+    return x2
 
 
 # ## Task 0.3
